@@ -308,3 +308,8 @@ mvn -q -DskipTests=false test
 
 ## Ausblick
 - **Übung 2 (4.11.)**: GitHub Actions – Build & Tests automatisiert ausführen; SonarCloud integrieren.
+
+
+## Autor
+- Autor: Florian Auzinger
+- Besonderheit: Seit mehreren Jahren arbeite ich mit Git und trotzdem habe ich es vor einiger Zeit geschafft, lokal duplizierte Hashes vorzufinden... so far so good.
