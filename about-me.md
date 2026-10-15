@@ -1,0 +1,8 @@
+- Florian Auzinger
+- Mobile Computing, 5. Semester
+- Freue mich darauf, Github-Actions zu verwenden, da das noch ein Thema ist, auf dem ich eher unbewandert bin
+- Fakten:
+  - Mass Effect fan
+  - DnD-Spieler
+  - 2 Katzen
+- Die ganze Zeit sich selbstständig um das Deployment kümmern zu müssen, ist lästig, daher ist Automatisierung hierbei nicht nur formell nötig, sondern auch längerfristig convenient.
