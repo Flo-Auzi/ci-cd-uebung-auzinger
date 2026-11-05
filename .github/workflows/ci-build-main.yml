@@ -1,0 +1,68 @@
+name: CI-Build
+on:
+  push:
+    branches: [ main ]
+    paths: [ 'src/**', 'pom.xml', '.github/workflows/**' ]
+  pull_request:
+    branches: [ main ]
+    paths: [ 'src/**', 'pom.xml', '.github/workflows/**' ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-test-analyze:
+    name: "Build, Test and Analyze for ${{ matrix.os }} with Java ${{ matrix.java }}"
+    strategy:
+      fail-fast: true
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        java: [17, 21]
+        exclude:
+          - os: windows-latest
+          - java: 17
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v7
+      
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+      
+      - name: Build & Test (with coverage)
+        run: mvn -B -DskipTests=false test
+
+      - name: Upload test reports
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: surefire-report-${{ matrix.os }}-java-${{ matrix.java }}
+          path: target/surefire-reports
+
+      - name: SonarQube Cloud Scan
+        env:
+          SONAR_TOKEN: ${{ secrets.CICD_UE02_TOKEN }}
+        run:
+          mvn -B org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
+          -Dsonar.projectKey=Flo-Auzi_ci-cd-uebung-auzinger
+          -Dsonar.organization=flo-auzi
+          -Dsonar.host.url=https://sonarcloud.io
+          -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
+
+      - name: Upload JaCoCo HTML (optional)
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: jacoco-site-${{ matrix.os }}-java-${{ matrix.java }}
+          path: target/site/jacoco
+
+      
+          
+    
