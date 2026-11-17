@@ -18,9 +18,9 @@ concurrency:
 jobs:
   build-test-analyze:
     name: "Build, Test and Analyze for ${{ matrix.os }} with Java ${{ matrix.java }}"
-    continue-on-error: true
+    continue-on-error: false
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest]
         java: [17, 21]
@@ -39,7 +39,6 @@ jobs:
       
       - name: Build & Test (with coverage)
         run: mvn -B -DskipTests=false test
-        continue-on-error: true
 
       - name: Generate JaCoCo report
         if: ${{ !cancelled() }}
@@ -64,7 +63,7 @@ jobs:
           -Dsonar.host.url=https://sonarcloud.io
           -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
 
-      - name: Upload JaCoCo HTML (optional)
+      - name: Upload JaCoCo HTML
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v7
         with:
