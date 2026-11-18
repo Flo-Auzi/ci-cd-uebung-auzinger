@@ -1,3 +1,8 @@
+# CI-Build status
+
+[![CI-Build](https://github.com/Flo-Auzi/ci-cd-uebung-auzinger/actions/workflows/ci-build-main.yml/badge.svg?branch=main)](https://github.com/Flo-Auzi/ci-cd-uebung-auzinger/actions/workflows/ci-build-main.yml),
+
+
 # CI/CD Übung – Java Basisprojekt (Ü1 mit Anleitungen)
 
 Dieses Repository ist der Startpunkt für **Übung 1** und wird in **allen folgenden Übungen** weiterverwendet
